@@ -46,20 +46,20 @@ USER_ID=$($PSQL "SELECT user_id FROM users WHERE username = '$USERNAME';")
 if [[ -z $USER_ID ]]
 then
   #then create user
-  GAME_
-  INSERT_USERNAME_RESULT=$($PSQL "INSERT INTO users(username) VALUES($USERNAME)")
+  INSERT_USERNAME_RESULT=$($PSQL "INSERT INTO users(username) VALUES('$USERNAME')")
   echo -e "\nWelcome, $USERNAME! It looks like this is your first time here."
   GAMES_PLAYED=0
+  BEST_GAME=0
+  USER_ID=$($PSQL "SELECT user_id FROM users WHERE username = '$USERNAME';")
 else
   echo "$($PSQL "SELECT games_played, best_game FROM users WHERE user_id = $USER_ID ;")" | while IFS="|" read GAMES_PLAYED BEST_GAME
   do
     echo -e "\nWelcome back, $USERNAME! You have played $GAMES_PLAYED games, and your best game took $BEST_GAME guesses."
   done
-  GAMES_PLAYED=$($PSQL "SELECT games_played FROM users WHERE user_id = '$USER_ID';")
 fi
 
+GAMES_PLAYED=$($PSQL "SELECT games_played FROM users where user_id = $USER_ID")
 (( GAMES_PLAYED += 1 ))
-
 UPDATE_GAMES_PLAYED=$($PSQL "UPDATE users SET games_played = $GAMES_PLAYED WHERE user_id = $USER_ID;")
 
 GAME
