@@ -34,7 +34,7 @@ GAME() {
 
 echo -e "\n~~ Number Guessing Game ~~\n"
 
-echo enter your username:
+echo Enter your username:
 
 read USERNAME
 
