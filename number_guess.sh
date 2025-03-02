@@ -9,8 +9,6 @@ GAME() {
 
   NUMBER_OF_GUESS=1
 
-  echo $RANDOM_NUMBER
-
   echo -e "\nGuess the secret number between 1 and 1000:"
 
   read NUMBER_GUESS
