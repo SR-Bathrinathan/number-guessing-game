@@ -34,6 +34,7 @@ GAME() {
   then
     BEST_GAME_UPDATE_RESULT=$($PSQL "UPDATE users SET best_game = $NUMBER_OF_GUESS where user_id = $USER_ID;")
   fi
+  
   echo -e "\nYou guessed it in $NUMBER_OF_GUESS tries. The secret number was $RANDOM_NUMBER. Nice job!"
 }
 
