@@ -29,6 +29,11 @@ GAME() {
     (( NUMBER_OF_GUESS += 1 ))
   done
 
+  BEST_GAME=$($PSQL "SELECT best_game FROM users where user_id = $USER_ID")
+  if [[ $BEST_GAME -lt $NUMBER_OF_GUESS ]]
+  then
+    BEST_GAME_UPDATE_RESULT=$($PSQL "UPDATE users SET best_game = $NUMBER_OF_GUESS where user_id = $USER_ID;")
+  fi
   echo -e "\nYou guessed it in $NUMBER_OF_GUESS tries. The secret number was $RANDOM_NUMBER. Nice job!"
 }
 
@@ -59,9 +64,3 @@ GAMES_PLAYED=$($PSQL "SELECT games_played FROM users where user_id = $USER_ID")
 UPDATE_GAMES_PLAYED=$($PSQL "UPDATE users SET games_played = $GAMES_PLAYED WHERE user_id = $USER_ID;")
 
 GAME
-
-BEST_GAME=$($PSQL "SELECT best_game FROM users where user_id = $USER_ID")
-if [[ $BEST_GAME -lt $NUMBER_OF_GUESS ]]
-then
-  BEST_GAME_UPDATE_RESULT=$($PSQL "UPDATE users SET best_game = $NUMBER_OF_GUESS where user_id = $USER_ID;")
-fi
